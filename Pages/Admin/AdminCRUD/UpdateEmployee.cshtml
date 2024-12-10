@@ -1,0 +1,49 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.AdminCRUD.UpdateEmployeeModel
+
+@{
+    ViewData["Title"] = "Rediger Medarbejder";
+}
+
+<h2>Rediger Medarbejder</h2>
+
+@if (Model.Employee == null)
+{
+    <p>Medarbejderen blev ikke fundet.</p>
+}
+else
+{
+    <form method="post">
+        <!-- Navn -->
+        <div class="form-group">
+            <label asp-for="Employee.Name" class="control-label">Navn</label>
+            <input asp-for="Employee.Name" class="form-control" />
+            <span asp-validation-for="Employee.Name" class="text-danger"></span>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <label asp-for="Employee.Password" class="control-label">Adgangskode</label>
+            <input asp-for="Employee.Password" class="form-control" type="password" />
+            <span asp-validation-for="Employee.Password" class="text-danger"></span>
+        </div>
+
+        <!-- Brugertype -->
+        <div class="form-group">
+            <label asp-for="Employee.UserType" class="control-label">Brugertype</label>
+            <select asp-for="Employee.UserType" class="form-control">
+                <option value="">-- Vælg Brugertype --</option>
+                <option value="Admin">Admin</option>
+                <option value="Employee">Medarbejder</option>
+            </select>
+            <span asp-validation-for="Employee.UserType" class="text-danger"></span>
+        </div>
+
+        <!-- Skjult felt for UserID -->
+        <input type="hidden" asp-for="Employee.UserId" />
+
+        <!-- Submit-knap -->
+        <button type="submit" class="btn btn-primary">Opdater</button>
+        <a asp-page="/Admin/AdminCRUD/ExistingEmployee" class="btn btn-secondary">Annuller</a>
+    </form>
+}

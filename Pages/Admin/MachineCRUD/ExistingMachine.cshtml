@@ -1,0 +1,53 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.MachineCRUD.ExistingMachineModel
+
+@{
+    ViewData["Title"] = "Eksisterende Maskiner";
+}
+
+<h2>Eksisterende Maskiner</h2>
+
+<p>
+    <a asp-page="/Index" class="btn btn-primary mt-3">Gå til forsiden</a>
+    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-success">Opret ny maskine</a>
+
+</p>
+
+<!-- Liste over maskiner -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Placering</th>
+            <th>Seneste Rengøring</th>
+            <th>Seneste Service</th>
+            <th>Seneste Påfyldning</th>
+            <th>Handlinger</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var machine in Model.Machines)
+        {
+            <tr>
+                <td>@machine.MachineId</td>
+                <td>@machine.Location</td>
+                <td>
+                    <a asp-page="./EditMachine" asp-route-id="@machine.MachineId" class="btn btn-warning">Rediger</a>
+                    <a asp-page="./DeleteMachine" asp-route-id="@machine.MachineId" class="btn btn-danger">Slet</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Håndtering af ingen maskiner -->
+@if (Model.Machines.Count == 0)
+{
+    <p>Der er ingen maskiner at vise.</p>
+    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-success">Opret ny maskine</a>
+
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

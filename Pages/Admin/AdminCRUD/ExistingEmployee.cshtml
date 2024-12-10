@@ -1,0 +1,51 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.AdminCRUD.ExistingEmployeeModel
+
+@{
+    ViewData["Title"] = "Eksisterende Medarbejdere";
+}
+
+<h2>Eksisterende Medarbejdere</h2>
+
+<p>
+    <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
+    <a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-success">Opret medarbejder</a>
+</p>
+
+<!-- Liste over medarbejdere -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Brugertype</th>
+            <th>Adgangskode</th>
+            <th>Handlinger</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model.Employees)
+        {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.UserType</td>
+                <td>@employee.Password</td>
+                <td>
+                    <a asp-page="/Admin/AdminCRUD/UpdateEmployee" asp-route-id="@employee.UserId" class="btn btn-warning">Rediger</a>
+                    <a asp-page="/Admin/AdminCRUD/DeleteEmployee" asp-route-id="@employee.UserId" class="btn btn-danger">Slet</a>
+                </td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+<!-- Håndtering af ingen medarbejdere -->
+@if (Model.Employees.Count == 0)
+{
+    <p>Der er ingen medarbejdere at vise.</p>
+    <a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-success">Opret medarbejder</a>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

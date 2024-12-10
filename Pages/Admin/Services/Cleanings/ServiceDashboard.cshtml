@@ -1,0 +1,52 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.Services.Cleanings.ExistingServiceModel
+
+@{
+    ViewData["Title"] = "Eksisterende Services";
+}
+
+<h2>Eksisterende Services</h2>
+
+<p>
+    <a asp-page="/Admin" class="btn btn-secondary">Tilbage til Admin</a>
+    <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Service Dato</th>
+            <th>Service Type</th>
+            <th>Medarbejder</th>
+            <th>Handlinger</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Services.Count > 0)
+        {
+            @foreach (var service in Model.Services) 
+            {
+                <tr>
+                    <td>@service.ServiceType</td>
+                    <td>@(Model.Employees.FirstOrDefault(e => e.UserId == service.UserId)?.Name ?? "Ukendt Medarbejder")</td>
+                    <td>
+                        <a asp-page="/Admin/Services/Cleanings/EditService" asp-route-id="@service.ServiceId" class="btn btn-warning">Rediger</a>
+                        <a asp-page="/Admin/Services/Cleanings/DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Slet</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">Ingen services fundet.</td>
+                <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

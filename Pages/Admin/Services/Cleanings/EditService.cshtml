@@ -1,0 +1,28 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.Services.Cleanings.EditModel
+@{
+    ViewData["Title"] = "Rediger Opgave";
+}
+
+<h1>Rediger Opgave</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Date">Dato</label>
+        <input type="date" asp-for="Service.Date" class="form-control" />
+        <span asp-validation-for="Service.Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="ServiceType">Service Type</label>
+        <input type="text" asp-for="Service.ServiceType" class="form-control" />
+        <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="UserID">Bruger ID</label>
+        <input type="number" asp-for="Service.UserId" class="form-control" />
+        <span asp-validation-for="Service.UserId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Opdater</button>
+</form>
+
+<a href="/Services/Cleanings/ServiceDashboard" class="btn btn-secondary mt-2">Tilbage til Opgaveoversigt</a>

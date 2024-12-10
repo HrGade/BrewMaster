@@ -1,0 +1,52 @@
+﻿@page
+@model BrewMaster.Pages.Admin.Services.Cleanings.DeleteServiceModel
+
+@{
+    ViewData["Title"] = "Slet Service";
+}
+
+<h2>Slet Service</h2>
+
+<!-- Hvis servicen er null, vis en fejlmeddelelse -->
+@if (Model.Service == null)
+{
+    <p>Servicen blev ikke fundet.</p>
+}
+else
+{
+    <p>Er du sikker på, at du vil slette følgende service?</p>
+
+ 
+    <!-- Vis detaljer om servicen -->
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">Service Dato</dt>
+            
+
+<div class="alert alert-warning">
+    <strong>Service Type:</strong> @Model.Service.ServiceType<br />
+    <strong>Bruger ID:</strong> @Model.Service.UserId
+</div>
+ 6782b647afbfda9e25f5f013cc29ee5da37ade01
+
+            <dt class="col-sm-2">Service Type</dt>
+            <dd class="col-sm-10">@Model.Service.ServiceType</dd>
+
+            <dt class="col-sm-2">Medarbejder</dt>
+            <dd class="col-sm-10">
+                @(Model.Employee?.Name ?? "Ukendt Medarbejder")
+            </dd>
+        </dl>
+    </div>
+
+    <!-- Bekræftelse af sletning -->
+    <form method="post">
+        <input type="hidden" asp-for="Service.ServiceId" />
+        <button type="submit" class="btn btn-danger">Slet</button>
+        <a asp-page="/Admin/Services/Cleanings/ServiceDashboard" class="btn btn-secondary">Annuller</a>
+    </form>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

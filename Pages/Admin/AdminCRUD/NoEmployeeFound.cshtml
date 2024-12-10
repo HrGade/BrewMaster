@@ -1,0 +1,15 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.AdminCRUD.NoEmployeeFoundModel 
+
+@{
+    ViewData["Title"] = "Ingen Medarbejdere Fundet";
+}
+
+<h2>Ingen Medarbejdere Fundet</h2>
+
+<p>Der er ikke oprettet nogen medarbejdere i systemet endnu.</p>
+
+<!-- Tilføj en knap for at oprette en ny medarbejder -->
+<a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-primary">Opret Ny Medarbejder</a>
+
+

@@ -1,0 +1,14 @@
+﻿@page
+@model BrewMaster.Models.Pages.Admin.Services.Cleanings.NoServiceFoundModel
+
+@{
+    ViewData["Title"] = "Ingen Opgave fundet";
+}
+
+<h2>Opgave Ikke Fundet</h2>
+
+<p>Du har ikke oprettet en opgave. Gå tilbage til listen over Opgaver eller opret en Opgave.</p>
+
+<a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Opgave</a>
+
+<a asp-page="/Admin/Services/Cleanings/ServiceDashboard" class="btn btn-primary">Gå til listen over Opgaver</a>

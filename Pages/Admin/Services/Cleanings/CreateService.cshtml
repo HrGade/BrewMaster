@@ -1,5 +1,5 @@
 ﻿@page
-@model BrewMaster.Models.Pages.Admin.Services.Cleanings.CreateServiceModel
+@model BrewMaster.ModelsPages.Admin.Service.Cleanings.CreateServiceModel
 
 @{
     ViewData["Title"] = "Opret Service";
@@ -7,27 +7,30 @@
 
 <h2>Opret Service</h2>
 
+<!-- Vis valideringsfejl -->
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 <form method="post">
-    <!-- Dato for servicen -->
+    <!-- Dato -->
     <div class="form-group">
-        <label asp-for="Service.Date" class="control-label">Service Dato</label>
-        <input asp-for="Service.Date" class="form-control" type="date" />
+        <label asp-for="Service.Date" class="control-label">Dato</label>
+        <input asp-for="Service.Date" class="form-control" type="datetime-local" />
         <span asp-validation-for="Service.Date" class="text-danger"></span>
     </div>
 
-    <!-- Service type -->
+    <!-- Service Type -->
     <div class="form-group">
         <label asp-for="Service.ServiceType" class="control-label">Service Type</label>
-        <input asp-for="Service.ServiceType" class="form-control" />
+        <input asp-for="Service.ServiceType" class="form-control" maxlength="150" />
         <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
     </div>
 
-    <!-- Vælg en medarbejder -->
+    <!-- Vælg Medarbejder -->
     <div class="form-group">
         <label asp-for="Service.UserId" class="control-label">Medarbejder</label>
         <select asp-for="Service.UserId" class="form-control">
             <option value="">-- Vælg medarbejder --</option>
-            @foreach (var employee in Model.Employee)
+            @foreach (var employee in Model.Employees)
             {
                 <option value="@employee.UserId">@employee.Name</option>
             }
@@ -35,11 +38,5 @@
         <span asp-validation-for="Service.UserId" class="text-danger"></span>
     </div>
 
-    <!-- Submit knap -->
-    <button type="submit" class="btn btn-primary">Opret</button>
-    <a asp-page="/Admin" class="btn btn-secondary">Annuller</a>
+    <button type="submit" class="btn btn-primary mt-3">Opret Service</button>
 </form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

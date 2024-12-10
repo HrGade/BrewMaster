@@ -26,6 +26,12 @@ else
             <dd class="col-sm-10">@Model.Machine.Location</dd>
 
             <dt class="col-sm-2">Seneste Rengøring</dt>
+            <dd class="col-sm-10">@Model.Machine.LatestCleaning?.ToString("yyyy-MM-dd") ?? "Ikke sat"</dd>
+
+
+            <dt class="col-sm-2">Seneste Service</dt>
+            <dd class="col-sm-10">@Model.Machine.LatestService?.ToString("yyyy-MM-dd") ?? "Ikke sat"</dd>
+
         </dl>
     </div>
 
@@ -36,6 +42,7 @@ else
         <a asp-page="/Admin/MachineCRUD/ExistingMachine" class="btn btn-secondary">Annuller</a>
     </form>
 
-    
-    
+
+
 }
+

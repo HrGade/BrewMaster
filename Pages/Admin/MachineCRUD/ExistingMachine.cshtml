@@ -8,16 +8,16 @@
 <h2>Eksisterende Maskiner</h2>
 
 <p>
-    <a asp-page="/Index" class="btn btn-primary mt-3">Gå til forsiden</a>
-    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-success">Opret ny maskine</a>
+    <!-- Knap til at gå tilbage til Admin -->
+    <a asp-page="/Index" class="btn btn-secondary">Tilbage til Forside</a>
 
+    <!-- Knap til at oprette en ny maskine -->
+    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-primary">Opret ny Maskine</a>
 </p>
 
-<!-- Liste over maskiner -->
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Placering</th>
             <th>Seneste Rengøring</th>
             <th>Seneste Service</th>
@@ -26,27 +26,31 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var machine in Model.Machines)
+        @if (Model.Machines.Count > 0)
+        {
+            @foreach (var machine in Model.Machines)
+            {
+                <tr>
+                    <td>@machine.Location</td>
+                    <td>@(machine.LatestCleaning?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
+                    <td>@(machine.LatestService?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
+                    <td>@(machine.LatestFillUp?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
+                    <td>
+                        <!-- Handlinger for hver maskine -->
+                        <a asp-page="/Admin/MachineCRUD/EditMachine" asp-route-id="@machine.MachineId" class="btn btn-warning">Rediger</a>
+                        <a asp-page="/Admin/MachineCRUD/DeleteMachine" asp-route-id="@machine.MachineId" class="btn btn-danger">Slet</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>@machine.MachineId</td>
-                <td>@machine.Location</td>
-                <td>
-                    <a asp-page="./EditMachine" asp-route-id="@machine.MachineId" class="btn btn-warning">Rediger</a>
-                    <a asp-page="./DeleteMachine" asp-route-id="@machine.MachineId" class="btn btn-danger">Slet</a>
-                </td>
+                <td colspan="5" class="text-center">Ingen maskiner fundet.</td>
             </tr>
         }
     </tbody>
 </table>
-
-<!-- Håndtering af ingen maskiner -->
-@if (Model.Machines.Count == 0)
-{
-    <p>Der er ingen maskiner at vise.</p>
-    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-success">Opret ny maskine</a>
-
-}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

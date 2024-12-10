@@ -17,27 +17,42 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
         [BindProperty]
         public Machine Machine { get; set; }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        // GET: Hent maskindata baseret på ID
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            // Hent maskinen fra databasen
-            var machine = await _context.Machines.FindAsync(id);
+            Machine = await _context.Machines.FindAsync(id);
+            if (Machine == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
 
-            if (machine == null)
+        // POST: Opdater maskinen
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            // Find den eksisterende maskine i databasen
+            var machineToUpdate = await _context.Machines.FindAsync(Machine.MachineId);
+            if (machineToUpdate == null)
             {
                 return NotFound();
             }
 
-            // Opdater maskinen
-            machine.Location = "Ny placering";
-
-                        // Brug Update() i stedet for Attach()
-            _context.Machines.Update(machine);
+            // Opdater kun de relevante felter
+            machineToUpdate.Location = Machine.Location;
+            machineToUpdate.LatestCleaning = Machine.LatestCleaning;
+            machineToUpdate.LatestService = Machine.LatestService;
+            machineToUpdate.LatestFillUp = Machine.LatestFillUp;
 
             // Gem ændringerne i databasen
             await _context.SaveChangesAsync();
 
             return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
         }
-
     }
 }

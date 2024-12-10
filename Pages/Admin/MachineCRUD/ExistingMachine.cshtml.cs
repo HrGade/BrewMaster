@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BrewMaster.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BrewMaster.Models.Pages.Admin.MachineCRUD
 {
@@ -16,8 +16,7 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
             _context = context;
         }
 
-        // Liste over maskiner
-        public IList<Machine> Machines { get; set; }
+        public List<Machine> Machines { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {

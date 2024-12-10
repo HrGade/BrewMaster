@@ -8,7 +8,7 @@
 <h2>Eksisterende Services</h2>
 
 <p>
-    <a asp-page="/Admin" class="btn btn-secondary">Tilbage til Admin</a>
+    <a asp-page="/Index" class="btn btn-secondary">Tilbage til Forside</a>
     <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a>
 </p>
 
@@ -39,10 +39,9 @@
         else
         {
             <tr>
-                <td colspan="4" class="text-center">Ingen services fundet.</td>
-                <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a>
-
+                <td colspan="4" class="text-center">Ingen services fundet. <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary"> Opret ny Service</a></td>
             </tr>
+            
         }
     </tbody>
 </table>

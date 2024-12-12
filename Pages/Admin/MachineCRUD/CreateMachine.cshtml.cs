@@ -23,13 +23,14 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
 
         public async Task<IActionResult> OnPostAsync()
         {
-            // Hvis modellen er ugyldig, vis valideringsfejl
+            // Hvis den indtastet maskine ikke er gyldig, vises der en fejl. 
             if (!ModelState.IsValid)
             {
                 return Page();
+                
             }
 
-            // Tjek for dubletter (for eksempel, om der allerede findes en maskine med samme placering)
+            // Her tjekkes der for, om der allerede eksisterer en maskine med samme navn.
             var existingMachine = _context.Machines
                 .FirstOrDefault(m => m.Location == Machine.Location);
 
@@ -41,16 +42,16 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
 
             try
             {
-                // Tilføj maskinen til databasen
+                // Her bliver maskinen skrevet ind til databasen.
                 _context.Machines.Add(Machine);
                 await _context.SaveChangesAsync();
 
-                // Omdiriger til oversigten over maskiner
+                // Omdirigerer tilbage til frontsiden af medarbejdere.
                 return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
             }
             catch (Exception ex)
             {
-                // Log fejlen (kan også logges i en fil, men her er det konsollen)
+                // Console.WriteLine skriver her hvis der opstår en fejl. Det er ellers ikke lovligt med CW, men ellers skal det laves i en txt fil. 
                 Console.WriteLine($"Der opstod en fejl under oprettelsen af maskinen: {ex.Message}");
                 ModelState.AddModelError(string.Empty, "Der opstod en uventet fejl. Prøv igen senere.");
                 return Page();

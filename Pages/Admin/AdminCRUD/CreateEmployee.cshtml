@@ -6,22 +6,25 @@
 <h2>Opret Medarbejder</h2>
 
 <form method="post">
-    <!-- Navn -->
+   
     <div class="form-group">
+        <!-- Navn -->
         <label asp-for="Employee.Name" class="control-label">Navn</label>
         <input asp-for="Employee.Name" class="form-control" />
         <span asp-validation-for="Employee.Name" class="text-danger"></span>
     </div>
 
-    <!-- Password -->
+    
     <div class="form-group">
+        <!-- Password -->
         <label asp-for="Employee.Password" class="control-label">Adgangskode</label>
         <input asp-for="Employee.Password" class="form-control" type="password" />
         <span asp-validation-for="Employee.Password" class="text-danger"></span>
     </div>
 
-    <!-- UserType -->
+    
     <div class="form-group">
+        <!-- UserType -->
         <label asp-for="Employee.UserType" class="control-label">Brugertype</label>
         <select asp-for="Employee.UserType" class="form-control">
             <option value="">-- Vælg Brugertype --</option>
@@ -31,8 +34,8 @@
         <span asp-validation-for="Employee.UserType" class="text-danger"></span>
     </div>
 
-    <!-- Submit knap -->
-    <button type="submit" class="btn btn-primary">Opret</button>
+    
+    <button type="submit" class="btn btn-primary">Opret</button> <!-- Submit knap -->
     <a asp-page="/Admin/AdminCRUD/ExistingEmployee" class="btn btn-secondary">Annuller</a>
 </form>
 

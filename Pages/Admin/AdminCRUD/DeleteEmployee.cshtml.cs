@@ -9,37 +9,24 @@ namespace BrewMaster.Models.Pages.Admin.AdminCRUD
     {
         private readonly BrewMasterContext _context;
 
-        // Property to hold the employee data
+        
         [BindProperty]
         public Employee Employee { get; set; }
 
-        // Constructor to initialize the database context
+        
         public DeleteEmployeeModel(BrewMasterContext context)
         {
             _context = context;
         }
 
-        // On GET: Fetch the employee by ID
-        public async Task<IActionResult> OnGetAsync(int id)
-        {
-            // Attempt to find the employee by ID
-            Employee = await _context.Employees.FindAsync(id);
+   
+  
 
-            // If employee is not found, show a custom message instead of 404
-            if (Employee == null)
-            {
-                TempData["ErrorMessage"] = "Medarbejderen blev ikke fundet.";  // Store the error message in TempData
-                return RedirectToPage("/Admin/AdminCRUD/NoEmployeeFound");  // Redirect to the Admin page
-            }
-
-            return Page();  // Return the page with the employee data
-        }
-
-        // On POST: Handle employee deletion
+       //Håndter fjernelse af Employee
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            // Find the employee to delete
-            var employeeToDelete = await _context.Employees.FindAsync(id);
+            
+            var employeeToDelete = await _context.Employees.FindAsync(id); // Finder medarbejderen som skal slettes
 
             // If the employee is not found, show a custom message instead of 404
             if (employeeToDelete == null)

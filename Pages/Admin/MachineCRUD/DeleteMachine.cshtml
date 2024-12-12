@@ -7,7 +7,7 @@
 
 <h2>Slet Maskine</h2>
 
-<!-- Hvis maskinen ikke findes, vis en fejlmeddelelse -->
+<!-- Hvis der ikke eksisterer en kaffemaskine i databasen, vises en fejlmeddelelse -->
 @if (Model.Machine == null)
 {
     <p>Maskinen blev ikke fundet.</p>
@@ -16,8 +16,9 @@ else
 {
     <p>Er du sikker på, at du vil slette følgende maskine?</p>
 
-    <!-- Vis detaljer om maskinen -->
+
     <div>
+        <!-- Deltajerer her maskinerne -->
         <dl class="row">
             <dt class="col-sm-2">Maskine ID</dt>
             <dd class="col-sm-10">@Model.Machine.MachineId</dd>
@@ -35,7 +36,7 @@ else
         </dl>
     </div>
 
-    <!-- Slet-knap og Annuller-knap -->
+    <!-- Knapper til at slette og annulere -->
     <form method="post">
         <input type="hidden" asp-for="Machine.MachineId" />
         <button type="submit" class="btn btn-danger">Slet</button>

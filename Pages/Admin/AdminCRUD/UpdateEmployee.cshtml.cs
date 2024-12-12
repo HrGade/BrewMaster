@@ -9,7 +9,7 @@ public class UpdateEmployeeModel : PageModel
 {
     private readonly BrewMasterContext _context;
 
-    // Bind Employee property to get and update employee data
+   
     [BindProperty]
     public Employee Employee { get; set; }
 
@@ -18,49 +18,49 @@ public class UpdateEmployeeModel : PageModel
         _context = context;
     }
 
-    // On GET: Fetch the employee by ID for editing
+ 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        // Fetch employee by ID from the database
+        // Hent Medarbejderen via id
         Employee = await _context.Employees.FindAsync(id);
 
-        // If employee is not found, return NotFound
+        // Hvis medarbejderen ikke kan findes, så returner "ikke fundet"
         if (Employee == null)
         {
             return NotFound();
         }
 
-        // Return the page with the employee data
+        
         return Page();
     }
 
-    // On POST: Handle employee update
+    // OnPostAsync håndterer her opdateringen af medarbejderen
     public async Task<IActionResult> OnPostAsync()
     {
-        // If model state is invalid, return the page
+       
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        // Find the employee by ID in the database
+        // Hent Medarbejderen via id
         var employeeToUpdate = await _context.Employees.FindAsync(Employee.UserId);
 
-        // If employee doesn't exist, return NotFound
+        // Hvis medarbejderen ikke kan findes, så returner "ikke fundet"
         if (employeeToUpdate == null)
         {
-            return NotFound();
+            return NotFound(); 
         }
 
-        // Update the employee properties with the new data
+        // Opdater medarbejderen med ændret egenskaber
         employeeToUpdate.Name = Employee.Name;
         employeeToUpdate.Password = Employee.Password;
         employeeToUpdate.UserType = Employee.UserType;
 
-        // Save changes to the database
+        // Gem til databasen
         await _context.SaveChangesAsync();
 
-        // Redirect to the Admin page after successful update
+        // retuner til ExistingEmployee hvis det lykkedes
         return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
     }
 }

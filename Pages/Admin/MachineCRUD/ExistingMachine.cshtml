@@ -8,11 +8,11 @@
 <h2>Eksisterende Maskiner</h2>
 
 <p>
-    <!-- Knap til at gå tilbage til Admin -->
-    <a asp-page="/Index" class="btn btn-secondary">Tilbage til Forside</a>
+    
+    <a asp-page="/Index" class="btn btn-secondary">Tilbage til Forside</a> <!-- Knap til at gå tilbage til Admin -->
 
-    <!-- Knap til at oprette en ny maskine -->
-    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-primary">Opret ny Maskine</a>
+    
+    <a asp-page="/Admin/MachineCRUD/CreateMachine" class="btn btn-primary">Opret ny Maskine</a> <!-- Knap til at oprette en ny maskine -->
 </p>
 
 <table class="table table-striped">
@@ -36,7 +36,7 @@
                     <td>@(machine.LatestService?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
                     <td>@(machine.LatestFillUp?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
                     <td>
-                        <!-- Handlinger for hver maskine -->
+                        <!-- Handlinger for hver maskine, slet eller rediger -->
                         <a asp-page="/Admin/MachineCRUD/EditMachine" asp-route-id="@machine.MachineId" class="btn btn-warning">Rediger</a>
                         <a asp-page="/Admin/MachineCRUD/DeleteMachine" asp-route-id="@machine.MachineId" class="btn btn-danger">Slet</a>
                     </td>

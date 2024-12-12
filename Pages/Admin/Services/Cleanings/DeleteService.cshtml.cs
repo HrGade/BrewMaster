@@ -19,7 +19,7 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
 
         public Employee Employee { get; set; }
 
-        // Hent servicen og tilhørende medarbejder baseret på ServiceID
+        // Hent servicen og tilhørende medarbejder baseret på ServiceId
         public async Task<IActionResult> OnGetAsync(int id)
         {
             // Find servicen baseret på ID
@@ -38,7 +38,7 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
         // Håndter sletning af servicen
         public async Task<IActionResult> OnPostAsync(int id)
         {
-            // Find servicen baseret på ID
+            // Find servicen baseret på id
             Service = await _context.Services.FindAsync(id);
 
             if (Service != null)

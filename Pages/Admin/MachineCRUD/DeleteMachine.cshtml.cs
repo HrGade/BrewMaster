@@ -17,13 +17,13 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
         [BindProperty]
         public Machine Machine { get; set; }
 
-        // Hent maskinen baseret på ID (GET-request)
+        // Maskinen hented her på et ID ( int id) fra databasen
         public async Task<IActionResult> OnGetAsync(int id)
         {
             // Find maskinen med det givne ID
             Machine = await _context.Machines.FindAsync(id);
 
-            // Hvis maskinen ikke findes, omdiriger til NoMachineFound-siden
+            // Hvis maskinen ikke findes, omdirigeres der til NoMachineFound-siden
             if (Machine == null)
             {
                 return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
@@ -32,12 +32,12 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
             return Page();
         }
 
-        // Håndter sletning af maskinen (POST-request)
+        // Her er OnPostAsync() den metode der håndterer sletningen af maskinen
         public async Task<IActionResult> OnPostAsync()
         {
             if (Machine != null)
             {
-                // Find maskinen i databasen, hvis den stadig eksisterer
+                // Tjekker om maskinen eksisterer og henter den 
                 var machineToDelete = await _context.Machines.FindAsync(Machine.MachineId);
 
                 if (machineToDelete != null)
@@ -48,7 +48,7 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
                 }
             }
 
-            // Omdiriger til Admin-siden
+            // Gå til Admin-siden
             return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
         }
     }

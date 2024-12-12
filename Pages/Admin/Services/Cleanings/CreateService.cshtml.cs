@@ -18,7 +18,7 @@ namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
         [BindProperty]
         public BrewMaster.Models.Service Service { get; set; }
 
-        // Liste over alle medarbejdere til dropdown-menu
+        
         public IList<Employee> Employees { get; set; }
 
         // GET: Hent medarbejdere til dropdown-menu
@@ -28,10 +28,10 @@ namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
             return Page();
         }
 
-        // POST: Opret en ny service
+       //Opret en ny opgave
         public async Task<IActionResult> OnPostAsync()
         {
-            // Valider formularen
+            
             if (!ModelState.IsValid)
             {
                 // Hvis ikke valid, henter vi medarbejderne igen og viser formularen
@@ -39,11 +39,11 @@ namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
                 return Page();
             }
 
-            // Kontrollér om den valgte medarbejder (UserID) findes i Employee
+            // Kontrollerer om den valgte medarbejder (UserID) findes i Employee
             var employeeExists = await _context.Employees.AnyAsync(e => e.UserId == Service.UserId);
             if (!employeeExists)
             {
-                // Hvis medarbejderen ikke findes, tilføj fejlmeddelelse
+                // Hvis medarbejderen ikke findes, tilføjes en fejlmeddelelse
                 ModelState.AddModelError("Service.UserID", "Den valgte medarbejder findes ikke.");
                 Employees = await _context.Employees.ToListAsync();
                 return Page();
@@ -57,7 +57,7 @@ namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
                 return Page();
             }
 
-            // Try-catch for at håndtere databasefejl
+            // Try-catch for at håndtere databasefejlen med datoen
             try
             {
                 // Tilføj service til databasen
@@ -66,13 +66,13 @@ namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
             }
             catch (Exception ex)
             {
-                // Hvis en fejl opstår under gemningen, vis fejl
+                // Hvis en fejl opstår under gemningen, vis fejl hvis datoen er forkert
                 ModelState.AddModelError(string.Empty, $"Der opstod en fejl under oprettelsen af servicen: {ex.Message}");
                 Employees = await _context.Employees.ToListAsync();
                 return Page();
             }
 
-            // Omdiriger til ServiceDashboard efter succes
+            // Omdiriger til ServiceDashboard efter success
             return RedirectToPage("/Admin/Service/Cleanings/ServiceDashboard");
         }
     }

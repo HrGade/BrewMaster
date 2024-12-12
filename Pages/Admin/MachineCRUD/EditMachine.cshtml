@@ -6,29 +6,33 @@
 <form method="post">
     <input type="hidden" asp-for="Machine.MachineId" />
 
-    <!-- Placering -->
+    
     <div class="form-group">
+        <!-- Placering -->
         <label asp-for="Machine.Location" class="control-label">Placering</label>
         <input asp-for="Machine.Location" class="form-control" />
         <span asp-validation-for="Machine.Location" class="text-danger"></span>
     </div>
 
-    <!-- Seneste Rengøring -->
+    
     <div class="form-group">
+        <!-- Seneste Rengøring -->
         <label asp-for="Machine.LatestCleaning" class="control-label">Seneste Rengøring</label>
         <input asp-for="Machine.LatestCleaning" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestCleaning" class="text-danger"></span>
     </div>
 
-    <!-- Seneste Service -->
+    
     <div class="form-group">
+        <!-- Seneste Service -->
         <label asp-for="Machine.LatestService" class="control-label">Seneste Service</label>
         <input asp-for="Machine.LatestService" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestService" class="text-danger"></span>
     </div>
 
-    <!-- Seneste Påfyldning -->
+    
     <div class="form-group">
+        <!-- Seneste Påfyldning -->
         <label asp-for="Machine.LatestFillUp" class="control-label">Seneste Påfyldning</label>
         <input asp-for="Machine.LatestFillUp" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestFillUp" class="text-danger"></span>

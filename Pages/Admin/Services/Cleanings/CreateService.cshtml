@@ -7,26 +7,29 @@
 
 <h2>Opret Service</h2>
 
-<!-- Vis valideringsfejl -->
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" }) <!-- Vis valideringsfejl -->
 
 <form method="post">
-    <!-- Dato -->
+    
     <div class="form-group">
+        <!-- Dato -->
         <label asp-for="Service.Date" class="control-label">Dato</label>
         <input asp-for="Service.Date" class="form-control" type="datetime-local" />
         <span asp-validation-for="Service.Date" class="text-danger"></span>
     </div>
 
-    <!-- Service Type -->
+   
     <div class="form-group">
+        <!-- Service Type -->
         <label asp-for="Service.ServiceType" class="control-label">Service Type</label>
         <input asp-for="Service.ServiceType" class="form-control" maxlength="150" />
         <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
     </div>
 
-    <!-- Vælg Medarbejder -->
+    
     <div class="form-group">
+        <!-- Vælg Medarbejder -->
         <label asp-for="Service.UserId" class="control-label">Medarbejder</label>
         <select asp-for="Service.UserId" class="form-control">
             <option value="">-- Vælg medarbejder --</option>

@@ -29,24 +29,11 @@ public class CreateEmployeeModel : PageModel
             return Page();
         }
 
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
 
-        // Tjek for duplikeret Password 
-
-        Employee existingEmployeeName = await _context.Employees.FindAsync(Employee.UserId);
+        Employee existingEmployeeName = await _context.Employees.FindAsync(Employee.UserId); // Tjekker her for om navnet allerede eksisterer/er duplikeret
         if (existingEmployeeName != null)
         {
             ModelState.AddModelError("Employee.Name", "BrugerNavn findes allerede.");
-            return Page();
-        }
-
-        Employee existingEmployeePassword = await _context.Employees.FindAsync(Employee.UserId);
-        if (existingEmployeePassword != null)
-        {
-            ModelState.AddModelError("Employee.Password", "Password findes allerede.");
             return Page();
         }
 

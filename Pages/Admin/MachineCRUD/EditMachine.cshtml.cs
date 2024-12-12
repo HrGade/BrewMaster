@@ -17,7 +17,7 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
         [BindProperty]
         public Machine Machine { get; set; }
 
-        // GET: Hent maskindata baseret på ID
+        // OnGetAsync henter maskinen ud fra dens id
         public async Task<IActionResult> OnGetAsync(int id)
         {
             Machine = await _context.Machines.FindAsync(id);
@@ -28,7 +28,7 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
             return Page();
         }
 
-        // POST: Opdater maskinen
+        // OnPostAsync sender den redigeret udgave af maskinen til databasen
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -36,7 +36,7 @@ namespace BrewMaster.Models.Pages.Admin.MachineCRUD
                 return Page();
             }
 
-            // Find den eksisterende maskine i databasen
+            // FindAsync finder eksisterende maskine
             var machineToUpdate = await _context.Machines.FindAsync(Machine.MachineId);
             if (machineToUpdate == null)
             {

@@ -11,34 +11,34 @@ namespace BrewMaster.Models.Pages.Admin.AdminCRUD
         [BindProperty]
         public Employee Employee { get; set; }
 
-        // Konstruktør, der injicerer ICrudRepository for Employee
+        //En Constructor der injicerer ICRUDRepository til Employee som <T>
         public CreateEmployeeModel(ICRUDRepository<Employee> employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
-        // Når siden indlæses (GET)
+        
         public void OnGet()
         {
-            // Vi behøver ikke gøre noget her, fordi vi kun viser formularen
+            // OnGet viser kun formularen
         }
 
-        // Håndter POST-anmodning for at oprette en ny medarbejder
+        
         public async Task<IActionResult> OnPostAsync()
         {
             // Validering af modellen
             if (!ModelState.IsValid)
             {
-                return Page(); // Hvis modellen er ugyldig, bliv på siden og vis fejl
+                return Page(); // Man bliver få siden, hvis der sker en fejl (f.eks. hvis ModelState er invalid). 
             }
 
-            // Tilføj medarbejderen via repository
+            // Bruger repository til at tilføje medarbejderen
             await _employeeRepository.AddAsync(Employee);
 
-            // Brug TempData til at vise en succesbesked
+            // TempData gør her, at når en Medarbejder bliver oprettet, bliver brugeren (Admin) underret om at det er success
             TempData["SuccessMessage"] = "Medarbejderen blev oprettet succesfuldt.";
 
-            // Omdiriger til listen over medarbejdere
+            // Fører brugeren  hen til ExistingEmployee for at vise listen med den oprettet medarbejder
             return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
         }
     }

@@ -1,0 +1,38 @@
+﻿@page
+@model BrewMaster.Pages.Admin.ServiceDashboardModel
+@{
+    <p>
+        <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
+    </p>
+
+
+    <section class="d-flex justify-content-between">
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Create Service</h2>
+            <button class="BtnBg">
+                <a href="/Admin/Services/Cleanings/CreateService">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Delete Service</h2>
+            <button class="BtnBg">
+                <a href="/Admin/Services/Cleanings/ExistingService">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Update Service</h2>
+            <button class="BtnBg">
+                <a href="/Admin/Services/Cleanings/ExistingService">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Existing Service</h2>
+            <button class="BtnBg">
+                <a href="/Admin/Services/Cleanings/ExistingService">Enter</a>
+            </button>
+        </article>
+    </section>
+}

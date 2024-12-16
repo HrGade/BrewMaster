@@ -1,6 +1,62 @@
 ﻿@page
 @model BrewMaster.Models.Pages.Admin.AdminModel
 @{
-        ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Admin page";
 }
 
+<p>
+    <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
+</p>
+
+
+<section class="pb-5">
+
+    <div class="d-flex justify-content-between">
+
+        <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">
+            <h5 class="card-title">Employees-Site</h5>
+            <p class="card-text">Administrate your workers.</p>
+
+            <button class="BtnBg">
+                <a asp-page="/Admin/EmployeeDashboard">Go to Employees</a>
+            </button>
+
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">
+            <h5 class="card-title">Machines</h5>
+            <p class="card-text">Administrate your Machines.</p>
+
+            <button class="BtnBg">
+                <a asp-page="/Admin/MachineDashboard">Go to Machines</a>
+            </button>
+
+        </article>
+
+
+        <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">
+            <h5 class="card-title">Påfyldninger</h5>
+            <p class="card-text">Registrer nye påfyldninger eller se historik.</p>
+
+            <button class="BtnBg">
+                <a asp-page="#">Gå til Påfyldninger</a>
+            </button>
+
+        </article>
+
+
+        <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">
+            <h5 class="card-title">Rengøringer</h5>
+            <p class="card-text">Hold styr på rengøringer af kaffemaskiner.</p>
+
+            <button class="BtnBg">
+                <a asp-page="/Admin/ServiceDashboard">Gå til Rengøringer</a>
+            </button>
+
+        </article>
+
+
+    </div>
+
+
+</section>

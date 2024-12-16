@@ -1,22 +1,104 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-color: lightgrey;
 }
 
-body {
-  margin-bottom: 60px;
+main {
+    background-color: lightgrey;
+    min-height: fit-content;
+}
+
+footer {
+    background-color: rgb(53, 33, 0);
+    color: ghostwhite;
+}
+
+
+
+/*header Details*/
+
+header {
+    background-image: linear-gradient(rgb(255, 225, 115), rgb(214, 127, 4));
+    color: rgb(255, 151, 66);
+    padding: 1rem;
+}
+
+.HeaderH1 {
+    color: rgb(77, 36, 2);
+    font: bold;
+    text-decoration: none;
+}
+
+header, a {
+    color: rgb(255, 151, 66);
+    text-decoration: none;
+}
+
+.HeaderLinks {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+
+
+/* Color diffenitions */
+
+h2 {
+    color: rgb(189, 92, 13 );
+}
+
+h1 {
+    color: saddlebrown;
+}
+
+p {
+    color: rgb(53, 33, 0);
+}
+
+img {
+    max-height: 7rem;
+}
+
+.bgBrun {
+    background-color: rgb(135, 79, 0);
+}
+
+.boxWidth {
+    width: 20rem;
+}
+
+/*Admin details */
+
+.AdminBokse {
+    border: 0.3rem solid rgb(92, 52, 4);
+    border-radius: 0px 25px;
+}
+
+.BtnBg {
+    background-color: rgb(135, 79, 0);
+    height: 5rem;
+    width: 10rem;
+    font-size: 1.5rem;
+    border: 0.2rem solid rgb(92, 52, 4);
+    border-radius: 0px 25px;
+}
+
+.BtnBg, a {
+    color: aliceblue;
 }

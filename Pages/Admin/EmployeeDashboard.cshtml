@@ -1,0 +1,42 @@
+﻿@page
+@model BrewMaster.Pages.Admin.EmployeeDetailsModel
+@{
+
+
+    <p>
+        <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
+    </p>
+
+
+    <section class="d-flex justify-content-between">
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Create Employee</h2>
+            <button class="BtnBg">
+                <a href="/Admin/AdminCRUD/CreateEmployee">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Delete Employee</h2>
+            <button class="BtnBg">
+                <a href="/Admin/AdminCRUD/ExistingEmployee">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Update Employee</h2>
+            <button class="BtnBg">
+                <a href="/Admin/AdminCRUD/ExistingEmployee">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Existing Employee</h2>
+            <button class="BtnBg">
+                <a href="/Admin/AdminCRUD/ExistingEmployee">Enter</a>
+            </button>
+        </article>
+    </section>
+}
+
+

@@ -1,0 +1,43 @@
+﻿@page
+@model BrewMaster.Pages.Admin.ServiceDetailsModel
+@{
+
+
+    <p>
+        <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
+    </p>
+
+
+
+    <section class="d-flex justify-content-between">
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Create Machine</h2>
+            <button class="BtnBg">
+                <a href="/Admin/MachineCRUD/CreateMachine">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Delete Machine</h2>
+            <button class="BtnBg">
+                <a href="/Admin/MachineCRUD/ExistingMachine">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Update Machine</h2>
+            <button class="BtnBg">
+                <a href="/Admin/MachineCRUD/ExistingMachine">Enter</a>
+            </button>
+        </article>
+
+        <article class="AdminBokse bg-white m-5 p-2 text-center">
+            <h2>Existing Machine</h2>
+            <button class="BtnBg">
+                <a href="/Admin/MachineCRUD/ExistingMachine">Enter</a>
+            </button>
+        </article>
+
+    </section>
+}
+

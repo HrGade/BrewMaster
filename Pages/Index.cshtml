@@ -4,67 +4,27 @@
     ViewData["Title"] = " Kaffemaskine Dashboard";
 }
 
-<div class="container mt-5">
+<div class="pt-5 container">
     <div class="row">
         <div class="col-md-12 text-center">
             <h1>Velkommen til BrewMaster</h1>
             <p class="lead">Hold styr på kaffemaskiner, påfyldninger, rengøringer og serviceeftersyn på én platform.</p>
         </div>
     </div>
-    <div class="row mt-4">
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Employees-Site</h5>
-                    <p class="card-text">Administrate your workers.</p>
-                    <a asp-page="/Admin/AdminCRUD/ExistingEmployee" class="btn btn-primary">Go to Employees</a>
-                </div>
-            </div>
-        </div>
+    <section class="pb-5 pt-5 text-center">
+        <article>
+            <button class="w-75 h-25 bgBrun mb-5">
+                <a href="/Admin/Admin"><h2 class="text-white-50">Admin</h2></a>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Machine-Site</h5>
-                    <p class="card-text">Administrate your workers.</p>
-                    <a asp-page="/Admin/MachineCRUD/ExistingMachine" class="btn btn-primary">Your Coffee Machines</a>
-                </div>
-            </div>
-        </div>
-</div>
-        <!-- Påfyldninger Sektion -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Påfyldninger</h5>
-                    <p class="card-text">Registrer nye påfyldninger eller se historik.</p>
-                    <a asp-page="/Admin/Påfyldninger/Index" class="btn btn-primary">Gå til Påfyldninger</a>
-                </div>
-            </div>
-        </div>
+            </button>
+        </article>
+        <article>
+            <button class="w-75 h-25 bgBrun">
+                <a href="/Admin/Services/Cleanings/ExistingService"><h2 class="text-white-50">Employee</h2></a>
 
-        <!-- Rengøringer Sektion -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Opgaver</h5>
-                    <p class="card-text">Hvad skal håndteres .</p>
-                    <a asp-page="/Admin/Services/Cleanings/ServiceDashboard" class="btn btn-primary">Gå til Opgaver</a>
+            </button>
+        </article>
+    </section>
 
-                </div>
-            </div>
-        </div>
-
-        <!-- Serviceeftersyn Sektion -->
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Serviceeftersyn</h5>
-                    <p class="card-text">Administrér serviceeftersyn og notifikationer.</p>
-                    <a asp-page="/Admin/ServiceEftersyn/Index" class="btn btn-primary">Gå til Serviceeftersyn</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>

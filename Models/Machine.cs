@@ -11,11 +11,11 @@ public partial class Machine
 
     public string? Location { get; set; }
 
-    public DateOnly? LatestCleaning { get; set; }
+    public DateTime? LatestCleaning { get; set; }
 
-    public DateOnly? LatestService { get; set; }
+    public DateTime? LatestService { get; set; }
 
-    public DateOnly? LatestFillUp { get; set; }
+    public DateTime? LatestFillUp { get; set; }
 
     public virtual ICollection<Reciefe> Recieves { get; set; } = new List<Reciefe>();
 

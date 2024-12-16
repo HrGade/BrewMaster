@@ -1,20 +1,27 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using BrewMaster.Models;
+using BrewMaster.Repositories;
 
-namespace BrewMaster.Models.Pages
+
+namespace BrewMaster.Pages.Repository
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ICRUDRepository<Machine> _machineRepository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        // Liste over maskiner
+        public List<Machine> Machines { get; set; }
+
+        // Korrekt injektion af ICrudRepository<Machine> i konstruktøren
+        public IndexModel(ICRUDRepository<Machine> machineRepository)
         {
-            _logger = logger;
+            _machineRepository = machineRepository;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            // Hent alle maskiner via repository
+            Machines = (List<Machine>)await _machineRepository.GetAllAsync();
         }
     }
 }

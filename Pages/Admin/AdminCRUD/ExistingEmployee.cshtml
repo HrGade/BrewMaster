@@ -1,5 +1,5 @@
 ﻿@page
-@model BrewMaster.Models.Pages.Admin.AdminCRUD.ExistingEmployeeModel
+@model BrewMaster.Models.Pages.Admin.AdminCRUD.ExistingEmployeesModel
 
 @{
     ViewData["Title"] = "Eksisterende Medarbejdere";
@@ -7,45 +7,57 @@
 
 <h2>Eksisterende Medarbejdere</h2>
 
-<p>
-    <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
-    <a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-success">Opret medarbejder</a>
-</p>
-
-<!-- Liste over medarbejdere -->
-<table class="table">
-    <thead>
-        <tr>
-            <th>Navn</th>
-            <th>Brugertype</th>
-            <th>Adgangskode</th>
-            <th>Handlinger</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model.Employees)
-        {
-            <tr>
-                <td>@employee.Name</td>
-                <td>@employee.UserType</td>
-                <td>@employee.Password</td>
-                <td>
-                    <a asp-page="/Admin/AdminCRUD/UpdateEmployee" asp-route-id="@employee.UserId" class="btn btn-warning">Rediger</a>
-                    <a asp-page="/Admin/AdminCRUD/DeleteEmployee" asp-route-id="@employee.UserId" class="btn btn-danger">Slet</a>
-                </td>
-            </tr>
-            
-        }
-    </tbody>
-</table>
-
-<!-- Håndtering af ingen medarbejdere -->
-@if (Model.Employees.Count == 0)
+<!-- Vis beskeder fra TempData -->
+@if (TempData["SuccessMessage"] != null)
 {
-    <p>Der er ingen medarbejdere at vise.</p>
-    <a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-success">Opret medarbejder</a>
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
 }
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<p>
+    <a asp-page="/Admin/AdminCRUD/CreateEmployee" class="btn btn-success">Opret ny medarbejder</a>
+</p>
+
+<!-- Hvis der er medarbejdere, vis dem i en tabel -->
+@if (Model.Employees != null && Model.Employees.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Navn</th>
+                <th>Brugertype</th>
+                <th>Adgangskode</th>
+                <th>Handlinger</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.Name</td>
+                    <td>@employee.UserType</td>
+                    <td>@employee.Password</td>
+                    <td>
+                        <!-- Rediger-knap -->
+                        <a asp-page="/Admin/AdminCRUD/UpdateEmployee" asp-route-id="@employee.UserId" class="btn btn-warning btn-sm">Rediger</a>
+
+                        <!-- Slet-knap -->
+                        <a asp-page="/Admin/AdminCRUD/DeleteEmployee" asp-route-id="@employee.UserId" class="btn btn-danger btn-sm">Slet</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Der er ingen medarbejdere at vise.</p>
 }

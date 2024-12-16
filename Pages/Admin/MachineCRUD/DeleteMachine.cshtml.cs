@@ -1,54 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
+using BrewMaster.Repositories;
 
-
-namespace BrewMaster.Models.Pages.Admin.MachineCRUD
+namespace BrewMaster.Models.Pages.Admin.AdminCRUD.Repository
 {
     public class DeleteMachineModel : PageModel
     {
-        private readonly BrewMasterContext _context;
-
-        public DeleteMachineModel(BrewMasterContext context)
-        {
-            _context = context;
-        }
+        private readonly ICRUDRepository<Machine> _machineRepository;
 
         [BindProperty]
         public Machine Machine { get; set; }
 
-        // Maskinen hented her på et ID ( int id) fra databasen
-        public async Task<IActionResult> OnGetAsync(int id)
+        // Constructor der injicerer ICrudRepository for Machine
+        public DeleteMachineModel(ICRUDRepository<Machine> machineRepository)
         {
-            // Find maskinen med det givne ID
-            Machine = await _context.Machines.FindAsync(id);
+            _machineRepository = machineRepository;
+        }
 
-            // Hvis maskinen ikke findes, omdirigeres der til NoMachineFound-siden
+        // Hent medarbejderen via ID og vis den på siden
+        public async Task<IActionResult> OnGetAsync(int id)
+
+        {
+            // Hent medarbejder ved hjælp af repository
+            Machine = await _machineRepository.GetByIdAsync(id);
+
+
+            // Hvis kaffemaskinen ikke findes, returner 404 NotFound
             if (Machine == null)
             {
+                TempData["ErrorMessage"] = "Ingen kaffemaskiner blev fundet.";
                 return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
             }
 
             return Page();
         }
 
-        // Her er OnPostAsync() den metode der håndterer sletningen af maskinen
-        public async Task<IActionResult> OnPostAsync()
+        // Håndter sletning af kaffemaskinen
+        public async Task<IActionResult> OnPostAsync(int id)
         {
-            if (Machine != null)
-            {
-                // Tjekker om maskinen eksisterer og henter den 
-                var machineToDelete = await _context.Machines.FindAsync(Machine.MachineId);
 
-                if (machineToDelete != null)
-                {
-                    // Fjern maskinen fra databasen
-                    _context.Machines.Remove(machineToDelete);
-                    await _context.SaveChangesAsync();
-                }
-            }
+            // Slet kaffemaskinen ved hjælp af repository
+            await _machineRepository.DeleteAsync(id);
 
-            // Gå til Admin-siden
+            TempData["SuccessMessage"] = "Kaffemaskinen blev slettet succesfuldt.";
+
+            // Redirect til listen over kaffemaskiner efter sletning
             return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
         }
     }

@@ -35,19 +35,19 @@ public partial class BrewMasterContext : DbContext
     {
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Employee__1788CCACF05F9549");
+            entity.HasKey(e => e.UserId).HasName("PK__Employee__1788CCAC1208B85C");
 
             entity.ToTable("Employee");
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Name)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Password)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.UserType)
-                .HasMaxLength(20)
+                .HasMaxLength(100)
                 .IsUnicode(false);
 
             entity.HasMany(d => d.Machines).WithMany(p => p.Users)
@@ -72,19 +72,22 @@ public partial class BrewMasterContext : DbContext
 
         modelBuilder.Entity<Machine>(entity =>
         {
-            entity.HasKey(e => e.MachineId).HasName("PK__Machine__44EE5B58E34296A8");
+            entity.HasKey(e => e.MachineId).HasName("PK__Machine__44EE5B58D0811BD4");
 
             entity.ToTable("Machine");
 
             entity.Property(e => e.MachineId).HasColumnName("MachineID");
+            entity.Property(e => e.LatestCleaning).HasColumnType("datetime");
+            entity.Property(e => e.LatestFillUp).HasColumnType("datetime");
+            entity.Property(e => e.LatestService).HasColumnType("datetime");
             entity.Property(e => e.Location)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .IsUnicode(false);
         });
 
         modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__20CF2E32D0ECBCA5");
+            entity.HasKey(e => e.NotificationId).HasName("PK__Notifica__20CF2E3246E5FB2B");
 
             entity.ToTable("Notification");
 
@@ -97,7 +100,7 @@ public partial class BrewMasterContext : DbContext
 
         modelBuilder.Entity<NotificationType>(entity =>
         {
-            entity.HasKey(e => e.NotTypeId).HasName("PK__Notifica__8C36C59C8196AA8B");
+            entity.HasKey(e => e.NotTypeId).HasName("PK__Notifica__8C36C59C818BE612");
 
             entity.ToTable("NotificationType");
 
@@ -112,7 +115,7 @@ public partial class BrewMasterContext : DbContext
 
         modelBuilder.Entity<Reciefe>(entity =>
         {
-            entity.HasKey(e => new { e.Date, e.MachineId }).HasName("PK__Recieves__E37698B37026D633");
+            entity.HasKey(e => new { e.Date, e.MachineId }).HasName("PK__Recieves__E37698B3DEF82B14");
 
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.MachineId).HasColumnName("MachineID");
@@ -125,14 +128,14 @@ public partial class BrewMasterContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.ServiceId).HasName("PK__Service__C51BB0EA3F2FF038");
+            entity.HasKey(e => e.ServiceId).HasName("PK__Service__C51BB0EA023F509C");
 
             entity.ToTable("Service");
 
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.ServiceType)
-                .HasMaxLength(150)
+                .HasMaxLength(200)
                 .IsUnicode(false);
             entity.Property(e => e.UserId).HasColumnName("UserID");
 

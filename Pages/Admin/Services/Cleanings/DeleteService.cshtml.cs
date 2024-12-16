@@ -1,55 +1,55 @@
+using BrewMaster.Models;
+using BrewMaster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace BrewMaster.Pages.Admin.Services.Cleanings
 {
     public class DeleteServiceModel : PageModel
     {
-        private readonly BrewMasterContext _context;
-
-        public DeleteServiceModel(BrewMasterContext context)
-        {
-            _context = context;
-        }
+        private readonly ICRUDRepository<Service> _serviceRepository;
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
         [BindProperty]
         public Service Service { get; set; }
 
         public Employee Employee { get; set; }
 
-        // Hent servicen og tilhørende medarbejder baseret på ServiceId
-        public async Task<IActionResult> OnGetAsync(int id)
+        public DeleteServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
         {
-            // Find servicen baseret på ID
-            Service = await _context.Services.FindAsync(id);
+            _serviceRepository = serviceRepository;
+            _employeeRepository = employeeRepository;
+        }
+
+        public async Task<IActionResult> OnGetAsync(int serviceId)
+        {
+            Service = await _serviceRepository.GetByIdAsync(serviceId);
 
             if (Service == null)
             {
-                return RedirectToPage("/Admin/Service/Cleanings/NoServiceFound");
+                return NotFound();
             }
 
-            // Hent navnet på medarbejderen, der er knyttet til servicen
-            Employee = await _context.Employees.FirstOrDefaultAsync(e => e.UserId == Service.UserId);
+            Employee = await _employeeRepository.GetByIdAsync(Service.UserId);
+
             return Page();
         }
 
-        // Håndter sletning af servicen
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int serviceId)
         {
-            // Find servicen baseret på id
-            Service = await _context.Services.FindAsync(id);
+            var service = await _serviceRepository.GetByIdAsync(serviceId);
 
-            if (Service != null)
+            if (service == null)
             {
-                // Fjern servicen fra databasen
-                _context.Services.Remove(Service);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
 
-            // Omdiriger til listen over eksisterende services
-            return RedirectToPage("/Admin/Services/Cleanings/ServiceDashboard");
+            await _serviceRepository.DeleteAsync(serviceId);
+
+            TempData["SuccessMessage"] = "Service deleted successfully.";
+            return RedirectToPage("ServiceDashboard");
         }
     }
 }
+

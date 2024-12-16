@@ -1,66 +1,55 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
+using BrewMaster.Repositories;
 
-
-namespace BrewMaster.Models.Pages.Admin.AdminCRUD;
-
-public class UpdateEmployeeModel : PageModel
+namespace BrewMaster.Models.Pages.Admin.AdminCRUD
 {
-    private readonly BrewMasterContext _context;
-
-   
-    [BindProperty]
-    public Employee Employee { get; set; }
-
-    public UpdateEmployeeModel(BrewMasterContext context)
+    public class UpdateEmployeeModel : PageModel
     {
-        _context = context;
-    }
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
- 
-    public async Task<IActionResult> OnGetAsync(int id)
-    {
-        // Hent Medarbejderen via id
-        Employee = await _context.Employees.FindAsync(id);
+        [BindProperty]
+        public Employee Employee { get; set; }
 
-        // Hvis medarbejderen ikke kan findes, så returner "ikke fundet"
-        if (Employee == null)
+        // Constructor der injicerer ICrudRepository for Employee
+        public UpdateEmployeeModel(ICRUDRepository<Employee> employeeRepository)
         {
-            return NotFound();
+            _employeeRepository = employeeRepository;
         }
 
-        
-        return Page();
-    }
-
-    // OnPostAsync håndterer her opdateringen af medarbejderen
-    public async Task<IActionResult> OnPostAsync()
-    {
-       
-        if (!ModelState.IsValid)
+        // Hent medarbejderens oplysninger via ID og vis dem i formularen
+        public async Task<IActionResult> OnGetAsync(int id)
         {
+            // Hent medarbejder ved hjælp af repository
+            Employee = await _employeeRepository.GetByIdAsync(id);
+
+            // Hvis medarbejderen ikke findes, omdiriger til listen og vis en fejlmeddelelse
+            if (Employee == null)
+            {
+                TempData["ErrorMessage"] = "Medarbejderen blev ikke fundet.";
+                return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
+            }
+
             return Page();
         }
 
-        // Hent Medarbejderen via id
-        var employeeToUpdate = await _context.Employees.FindAsync(Employee.UserId);
-
-        // Hvis medarbejderen ikke kan findes, så returner "ikke fundet"
-        if (employeeToUpdate == null)
+        // Håndter opdatering af medarbejderen
+        public async Task<IActionResult> OnPostAsync()
         {
-            return NotFound(); 
+            // Valider data fra formularen
+            if (!ModelState.IsValid)
+            {
+                return Page(); // Returner til siden med valideringsfejl
+            }
+
+            // Opdater medarbejder i databasen
+            await _employeeRepository.UpdateAsync(Employee);
+
+            // Tilføj succesmeddelelse til TempData
+            TempData["SuccessMessage"] = "Medarbejderen blev opdateret succesfuldt.";
+
+            // Omdiriger til listen over medarbejdere efter opdatering
+            return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
         }
-
-        // Opdater medarbejderen med ændret egenskaber
-        employeeToUpdate.Name = Employee.Name;
-        employeeToUpdate.Password = Employee.Password;
-        employeeToUpdate.UserType = Employee.UserType;
-
-        // Gem til databasen
-        await _context.SaveChangesAsync();
-
-        // retuner til ExistingEmployee hvis det lykkedes
-        return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
     }
 }

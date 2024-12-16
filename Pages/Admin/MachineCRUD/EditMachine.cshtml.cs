@@ -1,57 +1,55 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
-using System.Threading.Tasks;
+using BrewMaster.Repositories;
 
-namespace BrewMaster.Models.Pages.Admin.MachineCRUD
+
+namespace BrewMaster.Models.Pages.Admin.MachineCRUD.Repository
 {
     public class EditMachineModel : PageModel
     {
-        private readonly BrewMasterContext _context;
-
-        public EditMachineModel(BrewMasterContext context)
-        {
-            _context = context;
-        }
+        private readonly ICRUDRepository<Machine> _machineRepository;
 
         [BindProperty]
         public Machine Machine { get; set; }
 
-        // OnGetAsync henter maskinen ud fra dens id
+        // Konstruktør, der injicerer ICrudRepository for Machine
+        public EditMachineModel(ICRUDRepository<Machine> machineRepository)
+        {
+            _machineRepository = machineRepository;
+        }
+
+        // Hent maskinens data, når siden indlæses (GET)
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            Machine = await _context.Machines.FindAsync(id);
+            // Hent maskinen fra databasen via id
+            Machine = await _machineRepository.GetByIdAsync(id);
+
+            // Hvis maskinen ikke findes, returner 404
             if (Machine == null)
             {
-                return NotFound();
+                TempData["ErrorMessage"] = "Maskinen blev ikke fundet.";
+                return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
             }
+
             return Page();
         }
 
-        // OnPostAsync sender den redigeret udgave af maskinen til databasen
+        // Håndter POST-anmodningen for at opdatere maskinen
         public async Task<IActionResult> OnPostAsync()
         {
+            // Valider dataen fra formularen
             if (!ModelState.IsValid)
             {
-                return Page();
+                return Page(); // Hvis modellen er ugyldig, vis siden igen med fejlmeddelelser
             }
 
-            // FindAsync finder eksisterende maskine
-            var machineToUpdate = await _context.Machines.FindAsync(Machine.MachineId);
-            if (machineToUpdate == null)
-            {
-                return NotFound();
-            }
+            // Opdater maskinen i databasen
+            await _machineRepository.UpdateAsync(Machine);
 
-            // Opdater kun de relevante felter
-            machineToUpdate.Location = Machine.Location;
-            machineToUpdate.LatestCleaning = Machine.LatestCleaning;
-            machineToUpdate.LatestService = Machine.LatestService;
-            machineToUpdate.LatestFillUp = Machine.LatestFillUp;
+            // Brug TempData til at vise en succesbesked
+            TempData["SuccessMessage"] = "Maskinen blev opdateret succesfuldt.";
 
-            // Gem ændringerne i databasen
-            await _context.SaveChangesAsync();
-
+            // Omdiriger til listen over maskiner
             return RedirectToPage("/Admin/MachineCRUD/ExistingMachine");
         }
     }

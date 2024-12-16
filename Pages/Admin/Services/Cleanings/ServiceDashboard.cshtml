@@ -1,51 +1,36 @@
 ﻿@page
-@model BrewMaster.Models.Pages.Admin.Services.Cleanings.ExistingServiceModel
-
+@model BrewMaster.Pages.Admin.Services.ServiceDashboardModel
 @{
-    ViewData["Title"] = "Eksisterende Services";
+    ViewData["Title"] = "Service Dashboard";
 }
 
-<h2>Eksisterende Services</h2>
+<h1>Service Dashboard</h1>
 
-<p>
-    <a asp-page="/Index" class="btn btn-secondary">Tilbage til Forside</a>
-    <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a>
-</p>
-
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
-            <th>Service Dato</th>
+            <th>Service ID</th>
+            <th>Date</th>
             <th>Service Type</th>
-            <th>Medarbejder</th>
-            <th>Handlinger</th>
+            <th>User</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Services.Count > 0)
-        {
-            @foreach (var service in Model.Services) 
-            {
-                <tr>
-                    <td>@service.ServiceType</td>
-                    <td>@(Model.Employees.FirstOrDefault(e => e.UserId == service.UserId)?.Name ?? "Ukendt Medarbejder")</td>
-                    <td>
-                        <a asp-page="/Admin/Services/Cleanings/EditService" asp-route-id="@service.ServiceId" class="btn btn-warning">Rediger</a>
-                        <a asp-page="/Admin/Services/Cleanings/DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Slet</a>
-                    </td>
-                </tr>
-            }
-        }
-        else
+        @foreach (var service in Model.Services)
         {
             <tr>
-                <td colspan="4" class="text-center">Ingen services fundet. <a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary"> Opret ny Service</a></td>
+                <td>@service.ServiceId</td>
+                <td>@service.Date?.ToString("yyyy-MM-dd")</td>
+                <td>@service.ServiceType</td>
+                <td>@service.User?.Name ?? "Unknown"</td>
+                <td>
+                    <a asp-page="./EditService" asp-route-id="@service.ServiceId" class="btn btn-primary">Edit</a>
+                    <a asp-page="./DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
-            
         }
     </tbody>
 </table>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+

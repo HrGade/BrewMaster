@@ -1,79 +1,56 @@
+using BrewMaster.Models;
+using BrewMaster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-
-namespace BrewMaster.ModelsPages.Admin.Service.Cleanings
+namespace BrewMaster.Pages.Admin.Services
 {
     public class CreateServiceModel : PageModel
     {
-        private readonly BrewMaster.Models.BrewMasterContext _context;
-
-        public CreateServiceModel(BrewMaster.Models.BrewMasterContext context)
-        {
-            _context = context;
-        }
+        private readonly ICRUDRepository<Service> _serviceRepository;
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
         [BindProperty]
-        public BrewMaster.Models.Service Service { get; set; }
+        public Service Service { get; set; }
 
-        
-        public IList<Employee> Employees { get; set; }
-
-        // GET: Hent medarbejdere til dropdown-menu
-        public async Task<IActionResult> OnGetAsync()
+        public CreateServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
         {
-            Employees = await _context.Employees.ToListAsync();
+            _serviceRepository = serviceRepository;
+            _employeeRepository = employeeRepository;
+        }
+
+        public IActionResult OnGet()
+        {
             return Page();
         }
 
-       //Opret en ny opgave
         public async Task<IActionResult> OnPostAsync()
         {
             
-            if (!ModelState.IsValid)
+            // Hent Employee baseret på UserId og sæt User-egenskaben
+            var user = await _employeeRepository.GetByIdAsync(Service.UserId);
+
+            if (user == null)
             {
-                // Hvis ikke valid, henter vi medarbejderne igen og viser formularen
-                Employees = await _context.Employees.ToListAsync();
+                ModelState.AddModelError("Service.UserId", "Invalid UserId.");
                 return Page();
             }
 
-            // Kontrollerer om den valgte medarbejder (UserID) findes i Employee
-            var employeeExists = await _context.Employees.AnyAsync(e => e.UserId == Service.UserId);
-            if (!employeeExists)
-            {
-                // Hvis medarbejderen ikke findes, tilføjes en fejlmeddelelse
-                ModelState.AddModelError("Service.UserID", "Den valgte medarbejder findes ikke.");
-                Employees = await _context.Employees.ToListAsync();
-                return Page();
-            }
+            Service.User = user;
 
-            // Kontrollér om datoen er sat korrekt
-            if (Service.Date == DateTime.MinValue)
-            {
-                ModelState.AddModelError("Service.Date", "Vælg en gyldig dato.");
-                Employees = await _context.Employees.ToListAsync();
-                return Page();
-            }
-
-            // Try-catch for at håndtere databasefejlen med datoen
-            try
-            {
-                // Tilføj service til databasen
-                _context.Services.Add(Service);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                // Hvis en fejl opstår under gemningen, vis fejl hvis datoen er forkert
-                ModelState.AddModelError(string.Empty, $"Der opstod en fejl under oprettelsen af servicen: {ex.Message}");
-                Employees = await _context.Employees.ToListAsync();
-                return Page();
-            }
-
-            // Omdiriger til ServiceDashboard efter success
-            return RedirectToPage("/Admin/Service/Cleanings/ServiceDashboard");
+            await _serviceRepository.AddAsync(Service);
+            TempData["SuccessMessage"] = "Service created successfully.";
+            return RedirectToPage("ServiceDashboard");
         }
     }
 }
+
+
+
+
+
+
+
+
+

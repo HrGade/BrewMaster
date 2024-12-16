@@ -1,26 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
-using Microsoft.EntityFrameworkCore;
+using BrewMaster.Repositories;
+
 
 namespace BrewMaster.Models.Pages.Admin.AdminCRUD
 {
-    public class ExistingEmployeeModel : PageModel
+    public class ExistingEmployeesModel : PageModel
     {
-        private readonly BrewMasterContext _context;
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
-        public ExistingEmployeeModel(BrewMasterContext context)
+        // Liste over medarbejdere, der vises på siden
+        public List<Employee> Employees { get; set; }
+
+        // Konstruktør, der injicerer ICrudRepository for Employee
+        public ExistingEmployeesModel(ICRUDRepository<Employee> employeeRepository)
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
         }
 
-        // Liste over medarbejdere
-        public IList<Employee> Employees { get; set; }
-
+        // Hent medarbejdere, når siden indlæses
         public async Task<IActionResult> OnGetAsync()
         {
             // Hent alle medarbejdere fra databasen
-            Employees = await _context.Employees.ToListAsync();
+            Employees = (List<Employee>)await _employeeRepository.GetAllAsync();
+
+            // Hvis der ikke er nogen medarbejdere, vis en besked
+            if (Employees == null || Employees.Count == 0)
+            {
+                TempData["ErrorMessage"] = "Der blev ikke fundet nogen medarbejdere.";
+            }
+
             return Page();
         }
     }

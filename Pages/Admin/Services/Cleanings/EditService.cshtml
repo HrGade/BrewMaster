@@ -1,28 +1,31 @@
-﻿@page
-@model BrewMaster.Models.Pages.Admin.Services.Cleanings.EditModel
+﻿@page "{serviceId:int}"
+@model BrewMaster.Pages.Admin.Services.Cleanings.EditServiceModel
 @{
-    ViewData["Title"] = "Rediger Opgave";
+    ViewData["Title"] = "Edit Service";
 }
 
-<h1>Rediger Opgave</h1>
+<h1>Edit Service</h1>
 
 <form method="post">
     <div class="form-group">
-        <label for="Date">Dato</label>
-        <input type="date" asp-for="Service.Date" class="form-control" />
+        <label asp-for="Service.Date" class="control-label"></label>
+        <input asp-for="Service.Date" class="form-control" />
         <span asp-validation-for="Service.Date" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="ServiceType">Service Type</label>
-        <input type="text" asp-for="Service.ServiceType" class="form-control" />
+        <label asp-for="Service.ServiceType" class="control-label"></label>
+        <input asp-for="Service.ServiceType" class="form-control" />
         <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label for="UserID">Bruger ID</label>
-        <input type="number" asp-for="Service.UserId" class="form-control" />
+        <label asp-for="Service.UserId" class="control-label"></label>
+        <input asp-for="Service.UserId" class="form-control" />
         <span asp-validation-for="Service.UserId" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Opdater</button>
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
-<a href="/Services/Cleanings/ServiceDashboard" class="btn btn-secondary mt-2">Tilbage til Opgaveoversigt</a>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

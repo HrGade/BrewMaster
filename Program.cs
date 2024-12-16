@@ -1,7 +1,8 @@
 using BrewMaster.Models;
+using BrewMaster.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace BrewShit
+namespace BrewMaster
 {
     public class Program
     {
@@ -9,11 +10,29 @@ namespace BrewShit
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             builder.Services.AddDbContext<BrewMasterContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Registrer ServiceRepository som implementering af både ICRUDServiceRepository og ICRUDRepository<Service>
+            builder.Services.AddScoped<ICRUDRepository<Machine>, MachineRepository>();
+
+            // Registrer EmployeeRepository som implementering af ICRUDRepository<Employee>
+            builder.Services.AddScoped<ICRUDRepository<Employee>, EmployeeRepository>();
+
+            builder.Services.AddScoped<ICRUDRepository<Service>, ServiceRepository>();
+
+
+
+            builder.Services.Configure<CookiePolicyOptions>(options => {
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+                options.Secure = CookieSecurePolicy.SameAsRequest;
+            });
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+         
 
             var app = builder.Build();
 
@@ -36,5 +55,8 @@ namespace BrewShit
 
             app.Run();
         }
+
+        
     }
+    
 }

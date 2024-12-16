@@ -1,44 +1,45 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using BrewMaster.Models;
+using BrewMaster.Repositories;
 
-
-
-namespace BrewMaster.Models.Pages.Admin.AdminCRUD;
-public class CreateEmployeeModel : PageModel
+namespace BrewMaster.Models.Pages.Admin.AdminCRUD
 {
-    private readonly BrewMasterContext _context;
-
-    public CreateEmployeeModel(BrewMasterContext context)
+    public class CreateEmployeeModel : PageModel
     {
-        _context = context;
-    }
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
-    [BindProperty]
-    public Employee Employee { get; set; }
+        [BindProperty]
+        public Employee Employee { get; set; }
 
-    public IActionResult OnGet()
-    {
-        return Page();
-    }
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        if (!ModelState.IsValid)
+        // Konstruktør, der injicerer ICrudRepository for Employee
+        public CreateEmployeeModel(ICRUDRepository<Employee> employeeRepository)
         {
-            return Page();
+            _employeeRepository = employeeRepository;
         }
 
-
-        Employee existingEmployeeName = await _context.Employees.FindAsync(Employee.UserId); // Tjekker her for om navnet allerede eksisterer/er duplikeret
-        if (existingEmployeeName != null)
+        // Når siden indlæses (GET)
+        public void OnGet()
         {
-            ModelState.AddModelError("Employee.Name", "BrugerNavn findes allerede.");
-            return Page();
+            // Vi behøver ikke gøre noget her, fordi vi kun viser formularen
         }
 
-        _context.Employees.Add(Employee);
-        await _context.SaveChangesAsync();
-        return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
+        // Håndter POST-anmodning for at oprette en ny medarbejder
+        public async Task<IActionResult> OnPostAsync()
+        {
+            // Validering af modellen
+            if (!ModelState.IsValid)
+            {
+                return Page(); // Hvis modellen er ugyldig, bliv på siden og vis fejl
+            }
+
+            // Tilføj medarbejderen via repository
+            await _employeeRepository.AddAsync(Employee);
+
+            // Brug TempData til at vise en succesbesked
+            TempData["SuccessMessage"] = "Medarbejderen blev oprettet succesfuldt.";
+
+            // Omdiriger til listen over medarbejdere
+            return RedirectToPage("/Admin/AdminCRUD/ExistingEmployee");
+        }
     }
 }

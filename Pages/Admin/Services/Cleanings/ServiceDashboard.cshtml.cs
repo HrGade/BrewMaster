@@ -1,30 +1,30 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using BrewMaster.Models;
-using Microsoft.EntityFrameworkCore;
+using BrewMaster.Repositories;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 
-namespace BrewMaster.Models.Pages.Admin.Services.Cleanings
+namespace BrewMaster.Pages.Admin.Services
 {
-    public class ExistingServiceModel : PageModel
+    public class ServiceDashboardModel : PageModel
     {
-        private readonly BrewMasterContext _context;
+        private readonly ICRUDRepository<Service> _serviceRepository;
 
-        public ExistingServiceModel(BrewMasterContext context)
+
+        public ServiceDashboardModel(ICRUDRepository<Service> serviceRepository)
         {
-            _context = context;
+            _serviceRepository = serviceRepository;
+            Services = new List<Service>();
         }
 
-        // Liste over services og medarbejdere
         public IList<Service> Services { get; set; }
-        public IList<Employee> Employees { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task OnGetAsync()
         {
-            // Hent alle services og medarbejdere fra databasen
-            Services = await _context.Services.ToListAsync();
-            Employees = await _context.Employees.ToListAsync();
-            return Page();
+            Services = (List<Service>)await _serviceRepository.GetAllAsync();
         }
     }
 }
+
+
+
+

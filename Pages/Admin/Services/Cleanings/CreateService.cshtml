@@ -1,45 +1,40 @@
 ﻿@page
-@model BrewMaster.ModelsPages.Admin.Service.Cleanings.CreateServiceModel
-
+@model BrewMaster.Pages.Admin.Services.CreateServiceModel
 @{
-    ViewData["Title"] = "Opret Service";
+    ViewData["Title"] = "Create Service";
 }
 
-<h2>Opret Service</h2>
-
-
-@Html.ValidationSummary(true, "", new { @class = "text-danger" }) <!-- Vis valideringsfejl -->
+<h1>Create Service</h1>
 
 <form method="post">
-    
     <div class="form-group">
-        <!-- Dato -->
-        <label asp-for="Service.Date" class="control-label">Dato</label>
-        <input asp-for="Service.Date" class="form-control" type="datetime-local" />
+        <label asp-for="Service.Date" class="control-label"></label>
+        <input asp-for="Service.Date" class="form-control" />
         <span asp-validation-for="Service.Date" class="text-danger"></span>
     </div>
-
-   
     <div class="form-group">
-        <!-- Service Type -->
-        <label asp-for="Service.ServiceType" class="control-label">Service Type</label>
-        <input asp-for="Service.ServiceType" class="form-control" maxlength="150" />
+        <label asp-for="Service.ServiceType" class="control-label"></label>
+        <input asp-for="Service.ServiceType" class="form-control" />
         <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
     </div>
-
-    
     <div class="form-group">
-        <!-- Vælg Medarbejder -->
-        <label asp-for="Service.UserId" class="control-label">Medarbejder</label>
-        <select asp-for="Service.UserId" class="form-control">
-            <option value="">-- Vælg medarbejder --</option>
-            @foreach (var employee in Model.Employees)
-            {
-                <option value="@employee.UserId">@employee.Name</option>
-            }
-        </select>
+        <label asp-for="Service.UserId" class="control-label"></label>
+        <input asp-for="Service.UserId" class="form-control" />
         <span asp-validation-for="Service.UserId" class="text-danger"></span>
     </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Opret Service</button>
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
+
+
+
+

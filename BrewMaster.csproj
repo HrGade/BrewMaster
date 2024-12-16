@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,12 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\Admin\AdminCRUD\DeleteEmployee.cshtml.cs~RF9cf0a3b.TMP" />
+    <None Remove="Pages\Admin\AdminCRUD\ExistingEmployee.cshtml.cs~RF9c1174f.TMP" />
+    <None Remove="Pages\Admin\MachineCRUD\DeleteMachine.cshtml~RF9d9e568.TMP" />
+    <None Remove="Pages\Admin\MachineCRUD\EditMachine.cshtml.cs~RFfaa4c4a.TMP" />
+    <None Remove="Pages\Admin\MachineCRUD\ExistingMachine.cshtml~RFfa83a52.TMP" />
+    <None Remove="Pages\Admin\Services\Cleanings\CreateService.cshtml.cs~RF35f8d5.TMP" />
+    <None Remove="Pages\Admin\Services\Cleanings\CreateService.cshtml.cs~RF391cf8.TMP" />
+    <None Remove="Pages\Admin\Services\Cleanings\CreateService.cshtml.cs~RF7b8806.TMP" />
+    <None Remove="Pages\Admin\Services\Cleanings\CreateService.cshtml~RF1adb82d.TMP" />
+    <None Remove="Pages\Admin\Services\Cleanings\CreateService.cshtml~RF3248035.TMP" />
+    <None Remove="Program.cs~RF1d99daa.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

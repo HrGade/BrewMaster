@@ -1,25 +1,28 @@
+using BrewMaster.Models;
+using BrewMaster.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-namespace BrewMaster.Models.Pages.Admin.Services.Cleanings
+namespace BrewMaster.Pages.Admin.Services.Cleanings
 {
-    public class EditModel : PageModel
+    public class EditServiceModel : PageModel
     {
-        private readonly BrewMaster.Models.BrewMasterContext _context;
-
-        public EditModel(BrewMaster.Models.BrewMasterContext context)
-        {
-            _context = context;
-        }
+        private readonly ICRUDRepository<Service> _serviceRepository;
+        private readonly ICRUDRepository<Employee> _employeeRepository;
 
         [BindProperty]
-        public BrewMaster.Models.Service Service { get; set; }
+        public Service Service { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(DateTime date)
+        public EditServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
         {
-            Service = await _context.Services
-                .FirstOrDefaultAsync(s => s.Date == date);
+            _serviceRepository = serviceRepository;
+            _employeeRepository = employeeRepository;
+        }
+
+        public async Task<IActionResult> OnGetAsync(int serviceId)
+        {
+            Service = await _serviceRepository.GetByIdAsync(serviceId);
 
             if (Service == null)
             {
@@ -29,10 +32,31 @@ namespace BrewMaster.Models.Pages.Admin.Services.Cleanings
             return Page();
         }
 
-
-        private bool ServiceExists(DateTime date)
+        public async Task<IActionResult> OnPostAsync()
         {
-            return _context.Services.Any(e => e.Date == date);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            // Hent Employee baseret på UserId og sæt User-egenskaben
+            var user = await _employeeRepository.GetByIdAsync(Service.UserId);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("Service.UserId", "Invalid UserId.");
+                return Page();
+            }
+
+            Service.User = user;
+
+            await _serviceRepository.UpdateAsync(Service);
+            TempData["SuccessMessage"] = "Service updated successfully.";
+            return RedirectToPage("ServiceDashboard");
         }
     }
 }
+
+
+
+

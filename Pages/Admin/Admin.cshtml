@@ -1,13 +1,19 @@
 ﻿@page
 @model BrewMaster.Models.Pages.Admin.AdminModel
 @{
-    ViewData["Title"] = "Admin page";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
 <p>
     <a asp-page="/Index" class="btn btn-secondary">Tilbage til forsiden</a>
 </p>
 
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Admin Dashboard</h1>
+        </div>
+    </div>
 
 <section class="pb-5">
 
@@ -33,16 +39,6 @@
 
         </article>
 
-
-        <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">
-            <h5 class="card-title">Påfyldninger</h5>
-            <p class="card-text">Registrer nye påfyldninger eller se historik.</p>
-
-            <button class="BtnBg">
-                <a asp-page="#">Gå til Påfyldninger</a>
-            </button>
-
-        </article>
 
 
         <article class="AdminBokse bg-white m-5 p-2 boxWidth text-center">

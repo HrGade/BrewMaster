@@ -14,7 +14,7 @@ namespace BrewMaster.Pages.Admin.Services
         [BindProperty]
         public Service Service { get; set; }
 
-        public CreateServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
+        public CreateServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository) //Instantierer serviceRepository og employeeRepository af ICRUDRepository 
         {
             _serviceRepository = serviceRepository;
             _employeeRepository = employeeRepository;
@@ -28,7 +28,7 @@ namespace BrewMaster.Pages.Admin.Services
         public async Task<IActionResult> OnPostAsync()
         {
             
-            // Hent Employee baseret på UserId og sæt User-egenskaben
+            // Hent Employee baseret på UserId og placer User
             var user = await _employeeRepository.GetByIdAsync(Service.UserId);
 
             if (user == null)
@@ -39,7 +39,7 @@ namespace BrewMaster.Pages.Admin.Services
 
             Service.User = user;
 
-            await _serviceRepository.AddAsync(Service);
+            await _serviceRepository.AddAsync(Service); //Tilføj til databasen
             TempData["SuccessMessage"] = "Service created successfully.";
             return RedirectToPage("/Admin/Services/Cleanings/ExistingService");
         }

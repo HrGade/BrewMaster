@@ -13,9 +13,9 @@ namespace BrewMaster.Pages.Admin.MachineCRUD
         [BindProperty]
         public Machine Machine { get; set; }
 
-        public CreateMachineModel(ICRUDRepository<Machine> machineRepository)
+        public CreateMachineModel(ICRUDRepository<Machine> machineRepository) //Instantierer machineRepository af ICRUDRepository
         {
-            _machineRepository = machineRepository;
+            _machineRepository = machineRepository; //Den lokale variabel bliver tilkoblet machineRepository
         }
 
         public IActionResult OnGet()
@@ -23,17 +23,18 @@ namespace BrewMaster.Pages.Admin.MachineCRUD
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task<IActionResult> OnPostAsync() 
         {
             if (!ModelState.IsValid)
             {
-                return Page();
+                return Page(); //Hvis ModelState ikke valideres bliver man på siden.
             }
 
             await _machineRepository.AddAsync(Machine);
 
             TempData["SuccessMessage"] = "Machine created successfully.";
-            return RedirectToPage("/Admin/MachineCRUD/ExistingMachine"); // Omdirigér til dashboardet eller maskineoversigten
+            return RedirectToPage("/Admin/MachineCRUD/ExistingMachine"); // Omdirigér til dashboardet eller maskineoversigten efter endt Tilføjelse af maskine
         }
     }
 }

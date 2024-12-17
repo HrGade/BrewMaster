@@ -20,6 +20,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
+            <!-- Overskrifter på <thead> -->
             <th>Placering</th>
             <th>Seneste Rengøring</th>
             <th>Seneste Service</th>
@@ -30,9 +31,10 @@
     <tbody>
             @foreach (var machine in Model.Machines)
             {
-                <tr>
-                    <td>@machine.Location</td>
-                    <td>@(machine.LatestCleaning?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
+            <tr>
+                <!-- Udskrift fra Databasen af Datoer og satte egenskaber -->
+                    <td>@(machine.Location ?? "Ikke valgt")</td>
+                    <td>@(machine.LatestCleaning?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td> <!-- Der står ikke valgt, hvis man ikke har indstillet feltet -->
                     <td>@(machine.LatestService?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
                     <td>@(machine.LatestFillUp?.ToString("dd-MM-yyyy") ?? "Ikke valgt")</td>
                     <td>
@@ -46,7 +48,7 @@
         else
         {
             <tr>
-                <td colspan="5" class="text-center">Ingen maskiner fundet.</td>
+            <td colspan="5" class="text-center">Ingen maskiner fundet.</td>  <!-- Sker hvis der ikke eksisterer nogen maskiner i Databasen -->
             </tr>
         }
     </tbody>

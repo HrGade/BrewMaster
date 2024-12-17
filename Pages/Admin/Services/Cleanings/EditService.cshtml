@@ -12,22 +12,25 @@
 
 <form method="post">
     <div class="form-group">
+        <!--Redigeringsfelt for Service dato-->
         <label asp-for="Service.Date" class="control-label"></label>
         <input asp-for="Service.Date" class="form-control" />
         <span asp-validation-for="Service.Date" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <!--Redigeringsfelt for ServiceType-->
         <label asp-for="Service.ServiceType" class="control-label"></label>
         <input asp-for="Service.ServiceType" class="form-control" />
         <span asp-validation-for="Service.ServiceType" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <!--Redigeringsfelt for UserId -->
         <label asp-for="Service.UserId" class="control-label"></label>
         <input asp-for="Service.UserId" class="form-control" />
         <span asp-validation-for="Service.UserId" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Gem</button>
-    <a asp-page="/Admin/Services/Cleanings/ExistingService" class="btn btn-secondary">Annuler</a>
+    <a asp-page="/Admin/Services/Cleanings/ExistingService" class="btn btn-secondary">Annuler</a> <!--Knap til at annulere-->
 </form>
 
 @section Scripts {

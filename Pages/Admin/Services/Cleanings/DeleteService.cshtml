@@ -15,6 +15,7 @@
 <hr />
 
 <div>
+    <!--Liste med beskrivende felter (Dato, Navn osv..-->
     <h3>@Model.Service.ServiceType</h3>
     <p>UserId: @Model.Service.UserId</p>
     <p>Date: @Model.Service.Date</p>
@@ -22,12 +23,13 @@
 </div>
 
 <form method="post">
+    <!--Inputfelter-->
     <input type="hidden" asp-for="Service.ServiceId" />
     <input type="hidden" asp-for="Service.UserId" />
     <input type="hidden" asp-for="Service.ServiceType" />
     <div>
         <input type="submit" value="Slet" class="btn btn-danger" /> |
-        <a asp-page="/Admin/Services/Cleanings/ExistingService" class="btn btn-secondary">Annuler</a>
+        <a asp-page="/Admin/Services/Cleanings/ExistingService" class="btn btn-secondary">Annuler</a>  <!--Knap til at annulere-->
     </div>
 </form>
 

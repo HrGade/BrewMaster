@@ -19,28 +19,32 @@
 
 <form method="post">
     <div class="form-group">
+        <!-- Label der viser maskinens lokation -->
         <label asp-for="Machine.Location" class="control-label">Lokation</label>
         <input asp-for="Machine.Location" class="form-control" />
         <span asp-validation-for="Machine.Location" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <!-- Label der viser maskinens sidste rengøring -->
         <label asp-for="Machine.LatestCleaning" class="control-label">Seneste Rengøring</label>
         <input asp-for="Machine.LatestCleaning" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestCleaning" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <!-- Label der viser sidste servicedato -->
         <label asp-for="Machine.LatestService" class="control-label">Seneste Service</label>
         <input asp-for="Machine.LatestService" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestService" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <!-- Label der viser maskinens sidste opfyldning -->
         <label asp-for="Machine.LatestFillUp" class="control-label">Seneste opfyldning</label>
         <input asp-for="Machine.LatestFillUp" class="form-control" type="date" />
         <span asp-validation-for="Machine.LatestFillUp" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="submit" value="Opret Kaffemaskine" class="btn btn-primary" />
-        <a asp-page="/Admin/MachineCRUD/ExistingMachine" class="btn btn-secondary">Annuller</a>
+        <input type="submit" value="Opret Kaffemaskine" class="btn btn-primary" /> <!-- Knap til at oprette kaffemaskine -->
+        <a asp-page="/Admin/MachineCRUD/ExistingMachine" class="btn btn-secondary">Annuller</a> <!-- Knap til at annulere oprettelsen af kaffemaskine -->
     </div>
 </form>
 

@@ -38,10 +38,10 @@
         <span asp-validation-for="Employee.UserType" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Opret</button> <!-- Submit-knap -->
-    <a asp-page="/Admin/AdminCRUD/ExistingEmployee" class="btn btn-secondary">Annuller</a>
+    <button type="submit" class="btn btn-primary">Opret</button> <!-- knap til at oprette medarbejderen -->
+    <a asp-page="/Admin/AdminCRUD/ExistingEmployee" class="btn btn-secondary">Annuller</a> <!-- knap til at annulere-->
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />  <!-- valideringsscript som sikrer at de forskellige felter udfyldes ordentligt -->
 }

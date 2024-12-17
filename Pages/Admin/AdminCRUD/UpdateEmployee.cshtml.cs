@@ -36,16 +36,16 @@ namespace BrewMaster.Models.Pages.Admin.AdminCRUD
         // Håndter opdatering af medarbejderen
         public async Task<IActionResult> OnPostAsync()
         {
-            // Valider data fra formularen
+            
             if (!ModelState.IsValid)
             {
-                return Page(); // Returner til siden med valideringsfejl
+                return Page(); // Hvis ModelState valideres ukorrekt bliver man på siden.
             }
 
             // Opdater medarbejder i databasen
             await _employeeRepository.UpdateAsync(Employee);
 
-            // Tilføj succesmeddelelse til TempData
+            // Tilføj succesmeddelelse til Brugeren
             TempData["SuccessMessage"] = "Medarbejderen blev opdateret succesfuldt.";
 
             // Omdiriger til listen over medarbejdere efter opdatering

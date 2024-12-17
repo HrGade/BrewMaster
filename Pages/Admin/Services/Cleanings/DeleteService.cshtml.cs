@@ -18,11 +18,11 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
 
         public DeleteServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
         {
-            _serviceRepository = serviceRepository;
-            _employeeRepository = employeeRepository;
+            _serviceRepository = serviceRepository; //Tildeler serviceRepository 
+            _employeeRepository = employeeRepository; //Tildeler employeeRepository
         }
 
-        public async Task<IActionResult> OnGetAsync(int serviceId)
+        public async Task<IActionResult> OnGetAsync(int serviceId) //Get anmodning baseret på serviceId
         {
             Service = await _serviceRepository.GetByIdAsync(serviceId);
 
@@ -31,20 +31,20 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
                 return NotFound();
             }
 
-            Employee = await _employeeRepository.GetByIdAsync(Service.UserId);
+            Employee = await _employeeRepository.GetByIdAsync(Service.UserId); //Henter medarbejder 
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int serviceId)
         {
-            var service = await _serviceRepository.GetByIdAsync(serviceId);
+            var service = await _serviceRepository.GetByIdAsync(serviceId); //Hent fra serviceId
 
             if (service == null)
             {
                 return NotFound();
             }
-
+            //Slet fra databasen
             await _serviceRepository.DeleteAsync(serviceId);
 
             TempData["SuccessMessage"] = "Service deleted successfully.";

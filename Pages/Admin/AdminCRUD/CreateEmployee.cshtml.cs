@@ -26,10 +26,10 @@ namespace BrewMaster.Models.Pages.Admin.AdminCRUD
         
         public async Task<IActionResult> OnPostAsync()
         {
-            // Validering af modellen
+            
             if (!ModelState.IsValid)
             {
-                return Page(); // Man bliver få siden, hvis der sker en fejl (f.eks. hvis ModelState er invalid). 
+                return Page(); // Man bliver på siden, hvis der sker en fejl (f.eks. hvis ModelState er invalid). 
             }
 
             // Bruger repository til at tilføje medarbejderen

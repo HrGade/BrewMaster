@@ -16,13 +16,13 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
 
         public EditServiceModel(ICRUDRepository<Service> serviceRepository, ICRUDRepository<Employee> employeeRepository)
         {
-            _serviceRepository = serviceRepository;
-            _employeeRepository = employeeRepository;
+            _serviceRepository = serviceRepository; //Tildeler serviceRepository 
+            _employeeRepository = employeeRepository; //Tildeler employeeRepository
         }
 
-        public async Task<IActionResult> OnGetAsync(int serviceId)
+        public async Task<IActionResult> OnGetAsync(int serviceId) //Anmoder GET via serviceId
         {
-            Service = await _serviceRepository.GetByIdAsync(serviceId);
+            Service = await _serviceRepository.GetByIdAsync(serviceId); 
 
             if (Service == null)
             {
@@ -32,7 +32,7 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync() 
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
 
             Service.User = user;
 
-            await _serviceRepository.UpdateAsync(Service);
+            await _serviceRepository.UpdateAsync(Service); //Send ændret Service til Databasen
             TempData["SuccessMessage"] = "Service updated successfully.";
             return RedirectToPage("/Admin/Services/Cleanings/ExistingService");
         }

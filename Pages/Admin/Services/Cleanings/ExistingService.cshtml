@@ -8,8 +8,8 @@
     ViewData["Title"] = "Service Dashboard";
 }
 
-<h1>Service Dashboard</h1>
-<a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Service</a> <!-- Knap til at oprette en ny maskine -->
+<h1>Opgaver</h1>
+
 
 <table class="table">
     <thead>
@@ -30,12 +30,15 @@
                 <td>@service.ServiceType</td>
                 <td>@service.User?.Name ?? "UserId"</td>
                 <td>
-                    <a asp-page="./EditService" asp-route-id="@service.ServiceId" class="btn btn-primary">Edit</a>
-                    <a asp-page="./DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Delete</a>
+                    <a asp-page="./EditService" asp-route-id="@service.ServiceId" class="btn btn-primary">Rediger</a>
+                    <a asp-page="./DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Slet</a>
+                    
                 </td>
+                
             </tr>
         }
     </tbody>
 </table>
+<a asp-page="/Admin/Services/Cleanings/CreateService" class="btn btn-primary">Opret ny Opgave</a> <!-- Knap til at oprette en ny Opgave -->
 
 

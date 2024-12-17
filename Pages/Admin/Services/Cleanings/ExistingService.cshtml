@@ -28,7 +28,7 @@
                 <td>@service.ServiceId</td>
                 <td>@service.Date?.ToString("yyyy-MM-dd")</td>
                 <td>@service.ServiceType</td>
-                <td>@service.User?.Name ?? "Unknown"</td>
+                <td>@service.User?.Name ?? "UserId"</td>
                 <td>
                     <a asp-page="./EditService" asp-route-id="@service.ServiceId" class="btn btn-primary">Edit</a>
                     <a asp-page="./DeleteService" asp-route-id="@service.ServiceId" class="btn btn-danger">Delete</a>

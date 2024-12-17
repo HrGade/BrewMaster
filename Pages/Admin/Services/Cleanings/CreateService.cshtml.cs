@@ -41,7 +41,7 @@ namespace BrewMaster.Pages.Admin.Services
 
             await _serviceRepository.AddAsync(Service);
             TempData["SuccessMessage"] = "Service created successfully.";
-            return RedirectToPage("ServiceDashboard");
+            return RedirectToPage("/Admin/Services/Cleanings/ExistingService");
         }
     }
 }

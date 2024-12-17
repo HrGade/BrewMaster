@@ -52,7 +52,7 @@ namespace BrewMaster.Pages.Admin.Services.Cleanings
 
             await _serviceRepository.UpdateAsync(Service);
             TempData["SuccessMessage"] = "Service updated successfully.";
-            return RedirectToPage("ServiceDashboard");
+            return RedirectToPage("/Admin/Services/Cleanings/ExistingService");
         }
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using BrewMaster.Repositories;
 
-namespace BrewMaster.Models.Pages.Admin.AdminCRUD.Repository
+namespace BrewMaster.Models.Pages.Admin.AdminCRUD.Repository //Skrevet af Adam
 {
     public class DeleteEmployeeModel : PageModel
     {
